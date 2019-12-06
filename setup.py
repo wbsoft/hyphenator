@@ -56,11 +56,11 @@ classifiers = [
 
 setup(
     name = 'hyphenator',
-    version = '0.5.1',
+    version = '0.6.0',
     py_modules = ['hyphenator'],
     author = 'Wilbert Berendsen',
     author_email = 'wbsoft@xs4all.nl',
-    url = 'http://python-hyphenator.googlecode.com/',
+    url = 'https://github.com/wbsoft/hyphenator',
     description = 'Pure Python module to hyphenate text using existing dictionaries',
     long_description = longdesc,
     classifiers = classifiers,
