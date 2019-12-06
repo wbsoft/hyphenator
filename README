@@ -22,6 +22,7 @@ u'let-ter-gre-pen'
 Features:
 
 * 100% pure Python
+* Supports Python 2 and 3
 * caches dict files and hyphenated words
 * supports nonstandard hyphenation patterns
 

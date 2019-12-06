@@ -16,13 +16,14 @@ License: LGPL. More info: http://python-hyphenator.googlecode.com/
 """
 
 
+import codecs
+import re
+
+
 try:
     chr = unichr
 except NameError:
     pass
-
-import codecs
-import re
 
 
 __all__ = ["Hyphenator"]
@@ -39,6 +40,7 @@ _hex_re = re.compile(r'\^{2}([0-9a-f]{2})')
 
 # replace the matched hex string with the corresponding unicode character
 _hex_repl = lambda matchObj: chr(int(matchObj.group(1), 16))
+
 
 def replace_hex(text):
     """Replaces ^^xx (where xx is a two-digit hexadecimal value) occurrences
@@ -72,8 +74,7 @@ class ParsedAlternative(object):
         val = int(val)
         if val & 1:
             return DataInt(val, (self.change, self.index, self.cut))
-        else:
-            return val
+        return val
 
 
 class DataInt(int):
@@ -125,8 +126,8 @@ class HyphenationDictionary(object):
                     factory = ParsedAlternative(pat, alt)
                 else:
                     factory = int
-                tag, values = zip(*[(s, factory(i or "0"))
-                                                    for i, s in parse(pat)])
+                tag, values = zip(
+                    *[(s, factory(i or "0")) for i, s in parse(pat)])
                 # if only zeros, skip this pattern
                 if any(values):
                     # strip zeros and store start offset.
@@ -194,7 +195,7 @@ class Hyphenator(object):
 
     """
     def __init__(self, filename, left=2, right=2, cache=True):
-        self.left  = left
+        self.left = left
         self.right = right
         if not cache or filename not in _hdcache:
             _hdcache[filename] = HyphenationDictionary(filename)
@@ -260,7 +261,7 @@ class Hyphenator(object):
     __call__ = iterate
 
 
-if __name__ == "__main__":
+def main():
     import sys
     dict_file = sys.argv[1]
     word = sys.argv[2]
@@ -273,3 +274,6 @@ if __name__ == "__main__":
     for i in h(word):
         print(" \u2013 ".join(i))
 
+
+if __name__ == "__main__":
+    main()
